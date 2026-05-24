@@ -19,9 +19,7 @@ C:\Users\thema\OneDrive\Documents\GitHub\SWE30003\OnlineBookstore\obj\Debug\net9
 C:\Users\thema\OneDrive\Documents\GitHub\SWE30003\OnlineBookstore\obj\Debug\net9.0\rjimswa.dswa.cache.json
 C:\Users\thema\OneDrive\Documents\GitHub\SWE30003\OnlineBookstore\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
 C:\Users\thema\OneDrive\Documents\GitHub\SWE30003\OnlineBookstore\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
-C:\Users\thema\OneDrive\Documents\GitHub\SWE30003\OnlineBookstore\obj\Debug\net9.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 C:\Users\thema\OneDrive\Documents\GitHub\SWE30003\OnlineBookstore\obj\Debug\net9.0\scopedcss\bundle\OnlineBookstore.styles.css
-C:\Users\thema\OneDrive\Documents\GitHub\SWE30003\OnlineBookstore\obj\Debug\net9.0\scopedcss\projectbundle\OnlineBookstore.bundle.scp.css
 C:\Users\thema\OneDrive\Documents\GitHub\SWE30003\OnlineBookstore\obj\Debug\net9.0\compressed\h5i0mfwmln-b9sayid5wm.gz
 C:\Users\thema\OneDrive\Documents\GitHub\SWE30003\OnlineBookstore\obj\Debug\net9.0\compressed\shoz3k55ph-61n19gt1b8.gz
 C:\Users\thema\OneDrive\Documents\GitHub\SWE30003\OnlineBookstore\obj\Debug\net9.0\compressed\s3fxrti9o7-xtxxf3hu2r.gz
@@ -84,8 +82,6 @@ C:\Users\thema\OneDrive\Documents\GitHub\SWE30003\OnlineBookstore\obj\Debug\net9
 C:\Users\thema\OneDrive\Documents\GitHub\SWE30003\OnlineBookstore\obj\Debug\net9.0\compressed\5klf2tcpla-muycvpuwrr.gz
 C:\Users\thema\OneDrive\Documents\GitHub\SWE30003\OnlineBookstore\obj\Debug\net9.0\compressed\jfxekpbgih-87fc7y1x7t.gz
 C:\Users\thema\OneDrive\Documents\GitHub\SWE30003\OnlineBookstore\obj\Debug\net9.0\compressed\bg30gbw903-mlv21k5csn.gz
-C:\Users\thema\OneDrive\Documents\GitHub\SWE30003\OnlineBookstore\obj\Debug\net9.0\compressed\3q8ijpf255-4nszqh9711.gz
-C:\Users\thema\OneDrive\Documents\GitHub\SWE30003\OnlineBookstore\obj\Debug\net9.0\compressed\e5f1syb9ne-4nszqh9711.gz
 C:\Users\thema\OneDrive\Documents\GitHub\SWE30003\OnlineBookstore\obj\Debug\net9.0\staticwebassets.build.json
 C:\Users\thema\OneDrive\Documents\GitHub\SWE30003\OnlineBookstore\obj\Debug\net9.0\staticwebassets.build.json.cache
 C:\Users\thema\OneDrive\Documents\GitHub\SWE30003\OnlineBookstore\obj\Debug\net9.0\staticwebassets.development.json
@@ -95,3 +91,4 @@ C:\Users\thema\OneDrive\Documents\GitHub\SWE30003\OnlineBookstore\obj\Debug\net9
 C:\Users\thema\OneDrive\Documents\GitHub\SWE30003\OnlineBookstore\obj\Debug\net9.0\OnlineBookstore.pdb
 C:\Users\thema\OneDrive\Documents\GitHub\SWE30003\OnlineBookstore\obj\Debug\net9.0\OnlineBookstore.genruntimeconfig.cache
 C:\Users\thema\OneDrive\Documents\GitHub\SWE30003\OnlineBookstore\obj\Debug\net9.0\ref\OnlineBookstore.dll
+C:\Users\thema\OneDrive\Documents\GitHub\SWE30003\OnlineBookstore\obj\Debug\net9.0\compressed\k24mqfcz8m-5ipweew5fc.gz
