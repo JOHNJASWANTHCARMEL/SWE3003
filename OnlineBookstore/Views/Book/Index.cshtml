@@ -1,0 +1,12 @@
+@model List<OnlineBookstore.Models.Book>
+
+<h1>Book Store</h1>
+
+@foreach(var book in Model)
+{
+    <div>
+        <h2>@book.Title</h2>
+        <p>@book.Author</p>
+        <p>$@book.Price</p>
+    </div>
+}
