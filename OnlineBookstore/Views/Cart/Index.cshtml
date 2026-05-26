@@ -1,0 +1,25 @@
+@model OnlineBookstore.Models.ShoppingCart
+
+<h1>Your Shopping Cart</h1>
+
+@if (Model.Items.Count == 0)
+{
+    <p>Your cart is empty.</p>
+}
+else
+{
+    @foreach (var item in Model.Items)
+    {
+        <div class="cart-item">
+            <h3>@item.Book.Specification.Title</h3>
+            <p>Quantity: @item.Quantity</p>
+            <p>Subtotal: $@item.SubTotal()</p>
+        </div>
+    }
+
+    <h2>Total: $@Model.GetTotal()</h2>
+
+    <a class="btn" href="/Checkout/Pay">
+        Checkout
+    </a>
+}

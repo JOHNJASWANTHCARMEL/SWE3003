@@ -1,12 +1,28 @@
 @model List<OnlineBookstore.Models.Book>
 
-<h1>Book Store</h1>
+<h1>Online Bookstore</h1>
 
-@foreach(var book in Model)
+<div class="book-grid">
+
+@foreach (var book in Model)
 {
-    <div>
-        <h2>@book.Title</h2>
-        <p>@book.Author</p>
-        <p>$@book.Price</p>
+    <div class="book-card">
+
+        <h2>@book.Specification.Title</h2>
+
+        <p>Author: @book.Specification.Author</p>
+
+        <p>Publisher: @book.Specification.Publisher</p>
+
+        <p>Price: $@book.Price</p>
+
+        <p>Stock: @book.Inventory.StockQuantity</p>
+
+        <a class="btn" href="/Cart/Add/@book.Id">
+            Add To Cart
+        </a>
+
     </div>
 }
+
+</div>

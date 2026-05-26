@@ -1,0 +1,20 @@
+@model List<OnlineBookstore.Models.Book>
+
+<h1>Admin Dashboard</h1>
+
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Stock</th>
+        <th>Price</th>
+    </tr>
+
+    @foreach (var book in Model)
+    {
+        <tr>
+            <td>@book.Specification.Title</td>
+            <td>@book.Inventory.StockQuantity</td>
+            <td>$@book.Price</td>
+        </tr>
+    }
+</table>
