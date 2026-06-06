@@ -1,0 +1,140 @@
+@model OnlineBookstore.Models.ShoppingCart
+
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<section class="checkout-hero">
+    <div>
+        <p class="checkout-label">Secure Checkout</p>
+        <h1>Complete Your Purchase</h1>
+        <p>Review all selected books and enter your payment and delivery details below.</p>
+    </div>
+</section>
+
+<section class="checkout-page">
+    <div class="checkout-left">
+        <div class="checkout-form-card">
+            <h2>Payment & Delivery Details</h2>
+
+            <p class="checkout-subtitle">
+                Please enter your card and delivery details to confirm the order.
+            </p>
+
+            @if (ViewBag.Error != null)
+            {
+                <div class="error-message">@ViewBag.Error</div>
+            }
+
+            <form method="post" action="/Checkout/Pay">
+                <div class="form-section-title">Payment Information</div>
+
+                <div class="form-group">
+                    <label>Name on Card</label>
+                    <input
+                        type="text"
+                        name="cardName"
+                        class="form-control"
+                        placeholder="Enter name on card"
+                        required />
+                </div>
+
+                <div class="form-group">
+                    <label>Credit Card Number</label>
+                    <input
+                        type="text"
+                        name="creditCardNumber"
+                        class="form-control"
+                        placeholder="1234 5678 9012 3456"
+                        maxlength="16"
+                        required />
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Expiry Date</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="MM/YY" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>CVV</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="123"
+                            maxlength="3" />
+                    </div>
+                </div>
+
+                <div class="form-section-title">Delivery Information</div>
+
+                <div class="form-group">
+                    <label>Delivery Address</label>
+                    <textarea
+                        name="deliveryAddress"
+                        class="form-control"
+                        rows="4"
+                        placeholder="Enter your full delivery address"
+                        required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input
+                        type="text"
+                        name="phoneNumber"
+                        class="form-control"
+                        placeholder="Enter phone number"
+                        required />
+                </div>
+
+                <button type="submit" class="btn-primary full-width checkout-pay-btn">
+                    Pay $@Model.GetTotal()
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <aside class="order-summary-card premium-summary">
+        <h2>Order Summary</h2>
+
+        @foreach (var item in Model.Items)
+        {
+            <div class="checkout-cart-item">
+                <img src="@item.Book.ImageUrl" alt="@item.Book.Specification.Title" />
+
+                <div>
+                    <h3>@item.Book.Specification.Title</h3>
+                    <p>@item.Book.Specification.Author</p>
+                    <p>Quantity: @item.Quantity</p>
+                    <strong>$@item.SubTotal()</strong>
+                </div>
+            </div>
+        }
+
+        <div class="summary-divider"></div>
+
+        <div class="summary-line">
+            <span>Delivery</span>
+            <strong>Free</strong>
+        </div>
+
+        <div class="summary-line">
+            <span>GST</span>
+            <strong>Included</strong>
+        </div>
+
+        <div class="summary-line total">
+            <span>Total</span>
+            <strong>$@Model.GetTotal()</strong>
+        </div>
+
+        <div class="secure-note">
+            <strong>Secure Payment</strong>
+            <p>This is a prototype checkout page. No real payment will be processed.</p>
+        </div>
+    </aside>
+</section>

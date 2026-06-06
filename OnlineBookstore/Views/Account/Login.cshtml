@@ -1,0 +1,58 @@
+@model OnlineBookstore.Models.CustomerAccount
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<section class="login-page">
+    <div class="login-card">
+        <h1>Login</h1>
+
+        <p class="login-subtitle">
+            Select whether you are logging in as a customer or an admin.
+        </p>
+
+        <form method="post" action="/Account/Login">
+            <div class="form-group">
+                <label>Account Type</label>
+
+                <select name="accountType" class="form-control">
+                    <option value="Customer">Customer Account</option>
+                    <option value="Admin">Admin Account</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Username</label>
+                <input 
+                    type="text" 
+                    name="Username" 
+                    class="form-control" 
+                    placeholder="Enter username" 
+                    required />
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input 
+                    type="password" 
+                    name="Password" 
+                    class="form-control" 
+                    placeholder="Enter password" 
+                    required />
+            </div>
+
+            <button type="submit" class="btn-primary full-width">
+                Login
+            </button>
+        </form>
+
+        <div class="demo-note">
+            <strong>Prototype note:</strong>
+            <p>
+                Customer and admin login are separated using the account type dropdown.
+                Authentication can be connected to backend logic later.
+            </p>
+        </div>
+    </div>
+</section>

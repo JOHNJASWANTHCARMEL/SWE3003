@@ -1,28 +1,46 @@
 @model List<OnlineBookstore.Models.Book>
 
-<h1>Online Bookstore</h1>
-
-<div class="book-grid">
-
-@foreach (var book in Model)
-{
-    <div class="book-card">
-
-        <h2>@book.Specification.Title</h2>
-
-        <p>Author: @book.Specification.Author</p>
-
-        <p>Publisher: @book.Specification.Publisher</p>
-
-        <p>Price: $@book.Price</p>
-
-        <p>Stock: @book.Inventory.StockQuantity</p>
-
-        <a class="btn" href="/Cart/Add/@book.Id">
-            Add To Cart
-        </a>
-
-    </div>
+@{
+    ViewData["Title"] = "Books";
 }
 
+<section class="page-header">
+    <h1>Available Books</h1>
+    <p>Browse the bookstore catalogue and choose an action for each book.</p>
+</section>
+
+<div class="book-grid">
+    @foreach (var book in Model)
+    {
+        <div class="book-card">
+            <img class="book-image" src="@book.ImageUrl" alt="@book.Specification.Title" />
+
+            <div class="book-card-content">
+                <h2>@book.Specification.Title</h2>
+
+                <p><strong>Author:</strong> @book.Specification.Author</p>
+                <p><strong>Publisher:</strong> @book.Specification.Publisher</p>
+                <p><strong>Stock:</strong> @book.Inventory.StockQuantity</p>
+
+                <p class="book-price">$@book.Price</p>
+
+                <div class="book-actions">
+                    <!-- Opens the detailed page for this book -->
+                    <a class="btn-secondary" href="/Book/Details/@book.Id">
+                        Book Details
+                    </a>
+
+                    <!-- Adds this book to the shopping cart -->
+                    <a class="btn-primary" href="/Cart/Add/@book.Id">
+                        Add to Cart
+                    </a>
+
+                    <!-- Adds this book to the cart and opens checkout -->
+                    <a class="btn-dark" href="/Cart/BuyNow/@book.Id">
+                        Buy Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
 </div>

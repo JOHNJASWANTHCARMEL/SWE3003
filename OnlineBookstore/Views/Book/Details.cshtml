@@ -1,0 +1,49 @@
+@model OnlineBookstore.Models.Book
+
+@{
+    ViewData["Title"] = "Book Details";
+}
+
+<section class="details-page">
+    <div class="details-cover">
+        <img class="details-book-image" src="@Model.ImageUrl" alt="@Model.Specification.Title" />
+    </div>
+
+    <div class="details-content">
+        <p class="breadcrumb">
+            <a href="/Book">Books</a> / @Model.Specification.Title
+        </p>
+
+        <h1>@Model.Specification.Title</h1>
+
+        <div class="details-info-box">
+            <p><strong>Author:</strong> @Model.Specification.Author</p>
+            <p><strong>Publisher:</strong> @Model.Specification.Publisher</p>
+            <p><strong>Available Stock:</strong> @Model.Inventory.StockQuantity</p>
+        </div>
+
+        <p class="details-price">$@Model.Price</p>
+
+        <p class="details-description">
+            This book is available in the Online Bookstore catalogue. You can add it
+            to your shopping cart or proceed directly to checkout.
+        </p>
+
+        <div class="details-actions">
+            <!-- Returns the user to the book listing page -->
+            <a class="btn-secondary" href="/Book">
+                Back to Books
+            </a>
+
+            <!-- Adds the selected book to the cart -->
+            <a class="btn-primary" href="/Cart/Add/@Model.Id">
+                Add to Cart
+            </a>
+
+            <!-- Adds selected book to cart and opens checkout -->
+            <a class="btn-dark" href="/Cart/BuyNow/@Model.Id">
+                Buy Now
+            </a>
+        </div>
+    </div>
+</section>

@@ -1,16 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using OnlineBookstore.Data;
-using OnlineBookstore.Models;
 
 namespace OnlineBookstore.Controllers;
 
 public class CartController : Controller
 {
-    private static ShoppingCart cart = new ShoppingCart();
-
     public IActionResult Index()
     {
-        return View(cart);
+        return View(FakeDatabase.Cart);
     }
 
     public IActionResult Add(int id)
@@ -19,9 +16,27 @@ public class CartController : Controller
 
         if (book != null && book.Inventory.IsInStock())
         {
-            cart.AddItem(book);
+            FakeDatabase.Cart.AddItem(book);
         }
 
         return RedirectToAction("Index", "Book");
+    }
+
+    public IActionResult BuyNow(int id)
+    {
+        var book = FakeDatabase.Books.FirstOrDefault(b => b.Id == id);
+
+        if (book != null && book.Inventory.IsInStock())
+        {
+            FakeDatabase.Cart.AddItem(book);
+        }
+
+        return RedirectToAction("Index", "Checkout");
+    }
+
+    public IActionResult Clear()
+    {
+        FakeDatabase.Cart.Items.Clear();
+        return RedirectToAction("Index");
     }
 }

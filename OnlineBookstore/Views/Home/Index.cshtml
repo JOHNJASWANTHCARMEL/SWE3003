@@ -1,8 +1,62 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="hero">
+    <div class="hero-content">
+        <p class="hero-label">Welcome to Online Bookstore</p>
+
+        <h1>Find your next favourite book today.</h1>
+
+        <p class="hero-text">
+            Browse a simple online bookstore where customers can view books,
+            add items to cart, checkout, and complete their purchase.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="/Book" class="btn-primary">Browse Books</a>
+            <a href="/Account/Login" class="btn-secondary">Login</a>
+        </div>
+    </div>
+
+    <div class="hero-card">
+        <h2>Featured Categories</h2>
+
+        <div class="category-list">
+            <div>Software Engineering</div>
+            <div>Programming</div>
+            <div>System Design</div>
+            <div>Computer Science</div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-heading">
+        <h2>Why shop with us?</h2>
+        <p>Simple browsing, easy checkout, and a clean bookstore experience.</p>
+    </div>
+
+    <div class="feature-grid">
+        <div class="feature-card">
+            <h3>Browse Books</h3>
+            <p>View all available books with title, author, publisher, price, and stock details.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>Book Details</h3>
+            <p>Click on a book to view more information before adding it to the cart.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>Easy Checkout</h3>
+            <p>Enter card and delivery details to complete the order process.</p>
+        </div>
+    </div>
+</section>
+
+<section class="cta-section">
+    <h2>Ready to start shopping?</h2>
+    <p>Explore the bookstore catalogue and choose a book to purchase.</p>
+    <a href="/Book" class="btn-primary">View Books</a>
+</section>

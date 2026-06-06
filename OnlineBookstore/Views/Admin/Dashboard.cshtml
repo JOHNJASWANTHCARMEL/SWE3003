@@ -1,20 +1,144 @@
 @model List<OnlineBookstore.Models.Book>
 
-<h1>Admin Dashboard</h1>
+@{
+    ViewData["Title"] = "Admin Dashboard";
 
-<table>
-    <tr>
-        <th>Title</th>
-        <th>Stock</th>
-        <th>Price</th>
-    </tr>
+    var totalBooks = Model.Count;
+    var totalStock = Model.Sum(book => book.Inventory.StockQuantity);
+    var totalInventoryValue = Model.Sum(book => book.Price * book.Inventory.StockQuantity);
+}
 
-    @foreach (var book in Model)
-    {
-        <tr>
-            <td>@book.Specification.Title</td>
-            <td>@book.Inventory.StockQuantity</td>
-            <td>$@book.Price</td>
-        </tr>
-    }
-</table>
+<section class="admin-header">
+    <h1>Admin Dashboard</h1>
+    <p>Manage bookstore inventory and generate reports.</p>
+</section>
+
+<section class="admin-stats">
+    <div class="stat-card">
+        <h2>@totalBooks</h2>
+        <p>Total Book Titles</p>
+    </div>
+
+    <div class="stat-card">
+        <h2>@totalStock</h2>
+        <p>Total Stock Quantity</p>
+    </div>
+
+    <div class="stat-card">
+        <h2>$@totalInventoryValue</h2>
+        <p>Total Inventory Value</p>
+    </div>
+</section>
+
+<section class="admin-management">
+    <div class="admin-form-card">
+        <h2>Add Book</h2>
+
+        <form method="post" action="/Admin/AddBook">
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" name="title" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label>Author</label>
+                <input type="text" name="author" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label>Publisher</label>
+                <input type="text" name="publisher" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label>Price</label>
+                <input type="number" step="0.01" name="price" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label>Stock Quantity</label>
+                <input type="number" name="stockQuantity" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label>Image URL</label>
+                <input type="text" name="imageUrl" class="form-control" placeholder="Paste book image URL" required />
+            </div>
+
+            <button type="submit" class="btn-primary full-width">
+                Add Book
+            </button>
+        </form>
+    </div>
+
+    <div class="admin-form-card">
+        <h2>Remove Book</h2>
+
+        <form method="post" action="/Admin/RemoveBook">
+            <div class="form-group">
+                <label>Select Book</label>
+
+                <select name="id" class="form-control" required>
+                    @foreach (var book in Model)
+                    {
+                        <option value="@book.Id">
+                            @book.Id - @book.Specification.Title
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <button type="submit" class="btn-danger full-width">
+                Remove Book
+            </button>
+        </form>
+
+        <div class="demo-note">
+            <strong>Note:</strong>
+            <p>The book is removed from the fake database while the application is running.</p>
+        </div>
+    </div>
+</section>
+
+<section class="report-section" id="reportTable">
+    <div class="report-heading-row">
+        <h2>Inventory Report</h2>
+
+        <button type="button" class="btn-dark" onclick="window.print()">
+            Generate Report
+        </button>
+    </div>
+
+    <table class="report-table">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Book ID</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Publisher</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Inventory Value</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var book in Model)
+            {
+                <tr>
+                    <td>
+                        <img class="report-book-image" src="@book.ImageUrl" alt="@book.Specification.Title" />
+                    </td>
+                    <td>@book.Id</td>
+                    <td>@book.Specification.Title</td>
+                    <td>@book.Specification.Author</td>
+                    <td>@book.Specification.Publisher</td>
+                    <td>$@book.Price</td>
+                    <td>@book.Inventory.StockQuantity</td>
+                    <td>$@(book.Price * book.Inventory.StockQuantity)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</section>

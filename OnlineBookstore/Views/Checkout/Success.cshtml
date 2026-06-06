@@ -1,7 +1,24 @@
 @model OnlineBookstore.Models.Receipt
 
-<h1>Payment Successful</h1>
+@{
+    ViewData["Title"] = "Payment Successful";
+}
 
-<p>Amount Paid: $@Model.AmountPaid</p>
+<section class="success-page">
+    <div class="success-card">
+        <div class="success-icon">✓</div>
 
-<p>Date: @Model.PaymentDate</p>
+        <h1>Payment Successful</h1>
+
+        <p>
+            Thank you for your purchase. Your payment has been processed successfully.
+        </p>
+
+        <div class="receipt-box">
+            <p><strong>Amount Paid:</strong> $@Model.AmountPaid</p>
+            <p><strong>Payment Date:</strong> @Model.PaymentDate</p>
+        </div>
+
+        <a href="/" class="btn-primary">Back to Home</a>
+    </div>
+</section>

@@ -9,4 +9,17 @@ public class BookController : Controller
     {
         return View(FakeDatabase.Books);
     }
+
+    // Shows the details page for the selected book.
+    public IActionResult Details(int id)
+    {
+        var book = FakeDatabase.Books.FirstOrDefault(b => b.Id == id);
+
+        if (book == null)
+        {
+            return NotFound();
+        }
+
+        return View(book);
+    }
 }

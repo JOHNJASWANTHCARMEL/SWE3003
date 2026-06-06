@@ -3,29 +3,53 @@
 <head>
     <meta charset="utf-8" />
     <title>Online Bookstore</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 
 <body>
+@{
+    var role = Context.Session.GetString("UserRole");
+    var username = Context.Session.GetString("Username");
+}
 
-    <nav style="background:black;padding:15px;">
-        <a href="/Book" style="color:white;margin-right:20px;">
-            Books
-        </a>
-
-        <a href="/Cart" style="color:white;margin-right:20px;">
-            Cart
-        </a>
-
-        <a href="/Admin/Dashboard" style="color:white;">
-            Admin
-        </a>
-    </nav>
-
-    <div class="container">
-        @RenderBody()
+<nav class="navbar">
+    <div class="nav-logo">
+        <a href="/">Online Bookstore</a>
     </div>
 
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/Book">Books</a>
+        <a href="/Cart">Cart</a>
+
+        @if (role == "Admin")
+        {
+            <a href="/Admin/Dashboard">Admin</a>
+        }
+
+        @if (string.IsNullOrEmpty(role))
+        {
+            <a href="/Account/Login">Login</a>
+        }
+        else
+        {
+            <span class="nav-user">Hi, @username</span>
+            <a href="/Account/Logout">Logout</a>
+        }
+    </div>
+</nav>
+
+    <main class="container">
+        @RenderBody()
+    </main>
+
+    <footer class="footer">
+        <p>&copy; Online Bookstore. All rights reserved.</p>
+    </footer>
+
+    <script src="~/js/site.js"></script>
+    <script src="~/js/cart.js"></script>
 </body>
 </html>
