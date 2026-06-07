@@ -20,22 +20,19 @@
 
                 <p><strong>Author:</strong> @book.Specification.Author</p>
                 <p><strong>Publisher:</strong> @book.Specification.Publisher</p>
-                <p><strong>Stock:</strong> @book.Inventory.StockQuantity</p>
+                <p><strong>Stock:</strong> <span id="stock-@book.Id">@book.Inventory.StockQuantity</span></p>
 
                 <p class="book-price">$@book.Price</p>
 
                 <div class="book-actions">
-                    <!-- Opens the detailed page for this book -->
                     <a class="btn-secondary" href="/Book/Details/@book.Id">
                         Book Details
                     </a>
 
-                    <!-- Adds this book to the shopping cart -->
-                    <a class="btn-primary" href="/Cart/Add/@book.Id">
+                    <button class="btn-primary" onclick="addToCart(@book.Id)">
                         Add to Cart
-                    </a>
+                    </button>
 
-                    <!-- Adds this book to the cart and opens checkout -->
                     <a class="btn-dark" href="/Cart/BuyNow/@book.Id">
                         Buy Now
                     </a>
