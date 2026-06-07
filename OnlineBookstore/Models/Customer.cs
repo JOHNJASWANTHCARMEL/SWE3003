@@ -1,6 +1,6 @@
 namespace OnlineBookstore.Models;
 
-public class StoreOwner : User
+public class Customer : User
 {
-    
+    public CustomerAccount Account { get; set; } = new CustomerAccount();
 }

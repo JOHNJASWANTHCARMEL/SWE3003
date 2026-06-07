@@ -405,6 +405,59 @@ a {
     margin-bottom: 0;
 }
 
+.register-card {
+    width: 500px;
+}
+
+.field-validation-error {
+    display: block;
+    color: #dc2626;
+    font-size: 13px;
+    margin-top: 5px;
+    min-height: 18px;
+}
+
+.field-optional {
+    color: #9ca3af;
+    font-weight: normal;
+    font-size: 13px;
+}
+
+.login-switch {
+    text-align: center;
+    margin-top: 20px;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.login-switch a {
+    color: #2563eb;
+    font-weight: bold;
+}
+
+.form-error-banner {
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    color: #dc2626;
+    border-radius: 9px;
+    padding: 11px 15px;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+.success-icon {
+    width: 64px;
+    height: 64px;
+    background: #16a34a;
+    color: white;
+    border-radius: 50%;
+    font-size: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 18px;
+}
+
 .checkout-page {
     display: grid;
     grid-template-columns: 1fr 370px;

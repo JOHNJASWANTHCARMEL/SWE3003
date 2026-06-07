@@ -108,6 +108,8 @@ public static class FakeDatabase
 
     public static ShoppingCart Cart = new ShoppingCart();
 
+    public static List<Customer> Customers = new();
+
     // Generates the next available book ID when admin adds a new book.
     public static int GetNextBookId()
     {

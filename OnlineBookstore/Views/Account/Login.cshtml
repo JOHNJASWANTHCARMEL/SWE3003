@@ -42,17 +42,16 @@
                     required />
             </div>
 
+            @if (!string.IsNullOrEmpty(ViewBag.Error as string))
+            {
+                <div class="form-error-banner">@ViewBag.Error</div>
+            }
+
             <button type="submit" class="btn-primary full-width">
                 Login
             </button>
         </form>
 
-        <div class="demo-note">
-            <strong>Prototype note:</strong>
-            <p>
-                Customer and admin login are separated using the account type dropdown.
-                Authentication can be connected to backend logic later.
-            </p>
-        </div>
+        <p class="login-switch">Don't have an account? <a href="/Account/Register">Register here</a></p>
     </div>
 </section>

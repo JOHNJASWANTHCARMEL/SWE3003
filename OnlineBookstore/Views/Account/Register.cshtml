@@ -1,0 +1,92 @@
+@model OnlineBookstore.Models.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<section class="login-page">
+    <div class="login-card register-card">
+        <h1>Create Account</h1>
+        <p class="login-subtitle">Fill in your details to create a customer account.</p>
+
+        <form method="post" asp-action="Register" id="register-form" novalidate>
+            <div class="form-group">
+                <label asp-for="FullName">Full Name</label>
+                <input asp-for="FullName" class="form-control" id="input-FullName"
+                       placeholder="Enter your full name" autocomplete="name" />
+                <span asp-validation-for="FullName" class="field-validation-error" id="error-FullName"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Email">Email</label>
+                <input asp-for="Email" class="form-control" id="input-Email"
+                       placeholder="e.g. name@domain.com" autocomplete="email" />
+                <span asp-validation-for="Email" class="field-validation-error" id="error-Email"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PhoneNumber">Phone Number <span class="field-optional">(optional)</span></label>
+                <input asp-for="PhoneNumber" class="form-control"
+                       placeholder="Enter phone number" autocomplete="tel" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Address">Address <span class="field-optional">(optional)</span></label>
+                <input asp-for="Address" class="form-control"
+                       placeholder="Enter your address" autocomplete="street-address" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Username">Username</label>
+                <input asp-for="Username" class="form-control" id="input-Username"
+                       placeholder="Choose a username" autocomplete="username" />
+                <span asp-validation-for="Username" class="field-validation-error" id="error-Username"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Password">Password</label>
+                <input asp-for="Password" class="form-control" id="input-Password"
+                       placeholder="Minimum 6 characters" autocomplete="new-password" />
+                <span asp-validation-for="Password" class="field-validation-error" id="error-Password"></span>
+            </div>
+
+            <button type="submit" class="btn-primary full-width">Create Account</button>
+        </form>
+
+        <p class="login-switch">Already have an account? <a href="/Account/Login">Sign in</a></p>
+    </div>
+</section>
+
+<script>
+(function () {
+    var emailRegex = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+
+    function attachClearOnInput(inputId, errorId, validate) {
+        var input = document.getElementById(inputId);
+        var error = document.getElementById(errorId);
+        if (!input || !error) return;
+
+        input.addEventListener('input', function () {
+            if (validate(input.value)) {
+                error.textContent = '';
+            }
+        });
+    }
+
+    attachClearOnInput('input-FullName', 'error-FullName', function (v) {
+        return v.trim().length > 0;
+    });
+
+    attachClearOnInput('input-Email', 'error-Email', function (v) {
+        return v.length === 0 || emailRegex.test(v);
+    });
+
+    attachClearOnInput('input-Username', 'error-Username', function (v) {
+        return v.trim().length > 0;
+    });
+
+    attachClearOnInput('input-Password', 'error-Password', function (v) {
+        return v.length >= 6;
+    });
+})();
+</script>
