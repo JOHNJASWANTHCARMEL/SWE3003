@@ -47,8 +47,48 @@ public class CartController : Controller
         return RedirectToAction("Index", "Checkout");
     }
 
+    public IActionResult Remove(int id)
+    {
+        var item = FakeDatabase.Cart.Items.FirstOrDefault(i => i.Book.Id == id);
+        if (item != null)
+        {
+            var book = FakeDatabase.Books.FirstOrDefault(b => b.Id == id);
+            if (book != null) book.Inventory.StockQuantity += item.Quantity;
+            FakeDatabase.Cart.RemoveItem(id);
+        }
+        return RedirectToAction("Index");
+    }
+
+    public IActionResult Increase(int id)
+    {
+        var book = FakeDatabase.Books.FirstOrDefault(b => b.Id == id);
+        if (book != null && book.Inventory.IsInStock())
+        {
+            book.Inventory.StockQuantity--;
+            FakeDatabase.Cart.IncreaseQuantity(id);
+        }
+        return RedirectToAction("Index");
+    }
+
+    public IActionResult Decrease(int id)
+    {
+        var item = FakeDatabase.Cart.Items.FirstOrDefault(i => i.Book.Id == id);
+        if (item != null)
+        {
+            var book = FakeDatabase.Books.FirstOrDefault(b => b.Id == id);
+            if (book != null) book.Inventory.StockQuantity++;
+            FakeDatabase.Cart.DecreaseQuantity(id);
+        }
+        return RedirectToAction("Index");
+    }
+
     public IActionResult Clear()
     {
+        foreach (var item in FakeDatabase.Cart.Items)
+        {
+            var book = FakeDatabase.Books.FirstOrDefault(b => b.Id == item.Book.Id);
+            if (book != null) book.Inventory.StockQuantity += item.Quantity;
+        }
         FakeDatabase.Cart.Items.Clear();
         return RedirectToAction("Index");
     }

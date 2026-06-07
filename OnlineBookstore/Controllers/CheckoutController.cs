@@ -24,7 +24,7 @@ public class CheckoutController : Controller
     }
 
     [HttpPost]
-    public IActionResult Pay(string cardName, string creditCardNumber, string deliveryAddress, string phoneNumber)
+    public IActionResult Pay(string cardName, string creditCardNumber, string deliveryAddress, string phoneNumber, bool simulateFailure = false)
     {
         if (FakeDatabase.Cart.Items.Count == 0)
         {
@@ -38,6 +38,11 @@ public class CheckoutController : Controller
         {
             ViewBag.Error = "Please complete all checkout fields.";
             return View("Index", FakeDatabase.Cart);
+        }
+
+        if (simulateFailure)
+        {
+            return View("Failed");
         }
 
         Payment payment = new Payment();

@@ -1,28 +1,72 @@
 @model OnlineBookstore.Models.ShoppingCart
 
-<h1>Your Shopping Cart</h1>
+@{
+    ViewData["Title"] = "Shopping Cart";
+}
+
+<section class="page-header">
+    <h1>Shopping Cart</h1>
+    <p>Review your selected books, adjust quantities, then proceed to checkout.</p>
+</section>
 
 @if (Model.Items.Count == 0)
 {
-    <p>Your cart is empty.</p>
+    <div class="cart-empty">
+        <p>Your cart is empty.</p>
+        <a href="/Book" class="btn-primary">Browse Books</a>
+    </div>
 }
 else
 {
-    @foreach (var item in Model.Items)
-    {
-        <div class="cart-item">
-            <h3>@item.Book.Specification.Title</h3>
-            <p>Quantity: @item.Quantity</p>
-            <p>Subtotal: $@item.SubTotal()</p>
+    <div class="cart-page">
+        <div class="cart-items-list">
+            @foreach (var item in Model.Items)
+            {
+                <div class="cart-item">
+                    <img class="cart-item-img" src="@item.Book.ImageUrl" alt="@item.Book.Specification.Title" />
+
+                    <div class="cart-item-details">
+                        <h3>@item.Book.Specification.Title</h3>
+                        <p>@item.Book.Specification.Author</p>
+                        <p class="cart-item-price">$@item.Book.Price each</p>
+                    </div>
+
+                    <div class="cart-item-controls">
+                        <div class="qty-control">
+                            <a href="/Cart/Decrease/@item.Book.Id" class="qty-btn">&#8722;</a>
+                            <span class="qty-value">@item.Quantity</span>
+                            <a href="/Cart/Increase/@item.Book.Id" class="qty-btn">&#43;</a>
+                        </div>
+                        <p class="cart-item-subtotal">$@item.SubTotal()</p>
+                        <a href="/Cart/Remove/@item.Book.Id" class="cart-remove-btn">Remove</a>
+                    </div>
+                </div>
+            }
         </div>
-    }
 
-    <h2>Total: $@Model.GetTotal()</h2>
+        <aside class="cart-summary-card">
+            <h2>Order Summary</h2>
 
-    @if (Model.Items.Count > 0)
-    {
-        <a class="btn-primary" href="/Checkout">
-            Checkout
-        </a>
-    }
+            @foreach (var item in Model.Items)
+            {
+                <div class="summary-line">
+                    <span>@item.Book.Specification.Title &times; @item.Quantity</span>
+                    <strong>$@item.SubTotal()</strong>
+                </div>
+            }
+
+            <div class="summary-divider"></div>
+
+            <div class="summary-line total">
+                <span>Total</span>
+                <strong>$@Model.GetTotal()</strong>
+            </div>
+
+            <a class="btn-primary full-width" href="/Checkout" style="margin-top: 18px; display: block; text-align: center;">
+                Proceed to Checkout
+            </a>
+
+            <a href="/Cart/Clear" class="cart-clear-btn">Clear cart</a>
+        </aside>
+    </div>
 }
