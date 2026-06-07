@@ -50,6 +50,26 @@ public class CheckoutController : Controller
 
         if (success)
         {
+            var orderId = FakeDatabase.GetNextOrderId();
+            var order = new Order
+            {
+                Id = orderId,
+                Status = "Paid",
+                Items = FakeDatabase.Cart.Items.Select(i => new OrderItem
+                {
+                    Book = i.Book,
+                    Quantity = i.Quantity,
+                    PurchasePrice = i.Book.Price
+                }).ToList(),
+                Invoice = new Invoice
+                {
+                    InvoiceNumber = orderId,
+                    TotalAmount = FakeDatabase.Cart.GetTotal(),
+                    CreatedDate = DateTime.Now
+                }
+            };
+            FakeDatabase.Orders.Add(order);
+
             Receipt receipt = new Receipt
             {
                 AmountPaid = FakeDatabase.Cart.GetTotal()

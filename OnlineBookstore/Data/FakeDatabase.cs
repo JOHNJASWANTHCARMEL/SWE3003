@@ -110,14 +110,17 @@ public static class FakeDatabase
 
     public static List<Customer> Customers = new();
 
-    // Generates the next available book ID when admin adds a new book.
+    public static List<Order> Orders = new();
+
     public static int GetNextBookId()
     {
-        if (Books.Count == 0)
-        {
-            return 1;
-        }
-
+        if (Books.Count == 0) return 1;
         return Books.Max(book => book.Id) + 1;
+    }
+
+    public static int GetNextOrderId()
+    {
+        if (Orders.Count == 0) return 1;
+        return Orders.Max(o => o.Id) + 1;
     }
 }

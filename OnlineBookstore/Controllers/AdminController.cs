@@ -6,70 +6,129 @@ namespace OnlineBookstore.Controllers;
 
 public class AdminController : Controller
 {
-    // Only admin users should be able to access this dashboard.
+    private bool IsAdmin() => HttpContext.Session.GetString("UserRole") == "Admin";
+
+    private AdminDashboardViewModel BuildDashboard() => new AdminDashboardViewModel
+    {
+        Books = FakeDatabase.Books,
+        Orders = FakeDatabase.Orders
+    };
+
     public IActionResult Dashboard()
     {
-        string? role = HttpContext.Session.GetString("UserRole");
-
-        if (role != "Admin")
-        {
-            return RedirectToAction("Login", "Account");
-        }
-
-        return View(FakeDatabase.Books);
+        if (!IsAdmin()) return RedirectToAction("Login", "Account");
+        return View(BuildDashboard());
     }
 
-    // Adds a new book from the admin dashboard form.
     [HttpPost]
-    public IActionResult AddBook(string title, string author, string publisher, decimal price, int stockQuantity, string imageUrl)
+    public IActionResult AddBook(AdminBookViewModel model)
     {
-        string? role = HttpContext.Session.GetString("UserRole");
+        if (!IsAdmin()) return RedirectToAction("Login", "Account");
 
-        if (role != "Admin")
+        if (!ModelState.IsValid)
         {
-            return RedirectToAction("Login", "Account");
+            var vm = BuildDashboard();
+            vm.AddBookForm = model;
+            return View("Dashboard", vm);
         }
 
-        Book newBook = new Book
+        FakeDatabase.Books.Add(new Book
         {
             Id = FakeDatabase.GetNextBookId(),
-            Price = price,
-            ImageUrl = imageUrl,
+            Price = model.Price,
+            ImageUrl = model.ImageUrl,
             Specification = new BookSpecification
             {
-                Title = title,
-                Author = author,
-                Publisher = publisher
+                Title = model.Title,
+                Author = model.Author,
+                Publisher = model.Publisher
             },
-            Inventory = new InventoryStatus
-            {
-                StockQuantity = stockQuantity
-            }
-        };
+            Inventory = new InventoryStatus { StockQuantity = model.StockQuantity }
+        });
 
-        FakeDatabase.Books.Add(newBook);
+        TempData["FlashSuccess"] = $"'{model.Title}' has been added to the catalogue.";
+        return RedirectToAction("Dashboard");
+    }
+
+    [HttpGet]
+    public IActionResult EditBook(int id)
+    {
+        if (!IsAdmin()) return RedirectToAction("Login", "Account");
+
+        var book = FakeDatabase.Books.FirstOrDefault(b => b.Id == id);
+        if (book == null) return RedirectToAction("Dashboard");
+
+        return View(new AdminBookViewModel
+        {
+            Id = book.Id,
+            Title = book.Specification.Title,
+            Author = book.Specification.Author,
+            Publisher = book.Specification.Publisher,
+            Price = book.Price,
+            StockQuantity = book.Inventory.StockQuantity,
+            ImageUrl = book.ImageUrl
+        });
+    }
+
+    [HttpPost]
+    public IActionResult EditBook(AdminBookViewModel model)
+    {
+        if (!IsAdmin()) return RedirectToAction("Login", "Account");
+
+        if (!ModelState.IsValid) return View(model);
+
+        var book = FakeDatabase.Books.FirstOrDefault(b => b.Id == model.Id);
+        if (book == null) return RedirectToAction("Dashboard");
+
+        book.Specification.Title = model.Title;
+        book.Specification.Author = model.Author;
+        book.Specification.Publisher = model.Publisher;
+        book.Price = model.Price;
+        book.Inventory.StockQuantity = model.StockQuantity;
+        book.ImageUrl = model.ImageUrl;
+
+        TempData["FlashSuccess"] = $"'{model.Title}' has been updated.";
+        return RedirectToAction("Dashboard");
+    }
+
+    [HttpPost]
+    public IActionResult RemoveBook(int id)
+    {
+        if (!IsAdmin()) return RedirectToAction("Login", "Account");
+
+        var book = FakeDatabase.Books.FirstOrDefault(b => b.Id == id);
+        if (book != null) FakeDatabase.Books.Remove(book);
 
         return RedirectToAction("Dashboard");
     }
 
-    // Removes a book using its ID.
     [HttpPost]
-    public IActionResult RemoveBook(int id)
+    public IActionResult ProcessFulfilment(int orderId)
     {
-        string? role = HttpContext.Session.GetString("UserRole");
+        if (!IsAdmin()) return RedirectToAction("Login", "Account");
 
-        if (role != "Admin")
+        var order = FakeDatabase.Orders.FirstOrDefault(o => o.Id == orderId);
+        if (order == null || order.Status != "Paid") return RedirectToAction("Dashboard");
+
+        order.Package = new Package
         {
-            return RedirectToAction("Login", "Account");
-        }
+            Id = orderId,
+            OrderId = orderId,
+            PackedDate = DateTime.Now
+        };
 
-        var book = FakeDatabase.Books.FirstOrDefault(b => b.Id == id);
-
-        if (book != null)
+        order.Shipment = new Shipment
         {
-            FakeDatabase.Books.Remove(book);
-        }
+            Id = orderId,
+            OrderId = orderId,
+            ShippedDate = DateTime.Now,
+            Carrier = "Standard Post",
+            TrackingNumber = $"TRK{orderId:D4}{DateTime.Now:MMddHHmm}"
+        };
 
+        order.Status = "Shipped";
+
+        TempData["FlashSuccess"] = $"Order #{orderId} has been processed and marked as shipped.";
         return RedirectToAction("Dashboard");
     }
 }
